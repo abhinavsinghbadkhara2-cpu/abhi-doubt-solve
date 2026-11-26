@@ -17,9 +17,13 @@ export default async (req) => {
     }
 
     const body = await req.json();
-    const question = body.question?.trim();
+    const question = (body.question || "").trim();
+    const imageBase64 = typeof body.imageBase64 === "string"
+      ? body.imageBase64.replace(/^data:[^;]+;base64,/, "")
+      : null;
+    const imageMimeType = body.imageMimeType || "image/jpeg";
 
-    if (!question || question.length > 10000) {
+    if ((!question && !imageBase64) || question.length > 10000) {
       return Response.json(
         { error: "Please enter a valid question." },
         { status: 400 }
@@ -34,8 +38,13 @@ Explain formulas and calculations.
 Give the correct final answer.
 
 Student question:
-${question}
+${question || "Please solve the question shown in the attached image."}
 `;
+
+    const parts = [{ text: prompt }];
+    if (imageBase64) {
+      parts.push({ inline_data: { mime_type: imageMimeType, data: imageBase64 } });
+    }
 
     const response = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
@@ -46,9 +55,7 @@ ${question}
           "x-goog-api-key": apiKey
         },
         body: JSON.stringify({
-          contents: [{
-            parts: [{ text: prompt }]
-          }]
+          contents: [{ parts }]
         })
       }
     );
