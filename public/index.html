@@ -1,0 +1,792 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#100d0a">
+<title>Abhi Doubt Solve</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+ background:#100d0a;color:white;
+ font-family:Poppins,sans-serif;
+ min-height:100vh;
+}
+
+header{
+ height:65px;padding:0 15px;
+ background:#17110c;border-bottom:1px solid #49301a;
+ display:flex;align-items:center;justify-content:space-between;
+ position:sticky;top:0;z-index:5;
+}
+
+.logo{
+ font:23px 'Kaushan Script',cursive;
+ color:#ff9d27;
+}
+
+.logo span{color:white}
+
+.icon-btn{
+ background:#281b10;color:#ffad42;
+ border:1px solid #65401e;
+ border-radius:10px;padding:9px 12px;
+ cursor:pointer;font-size:13px;
+}
+
+.layout{max-width:950px;margin:auto;padding:25px 15px 160px}
+
+.hero{text-align:center;padding:22px 0 28px}
+
+.hero h1{
+ font:36px 'Kaushan Script',cursive;
+ color:#ff9d27;
+}
+
+.hero h2{
+ font:23px 'Kaushan Script',cursive;
+ margin-top:8px;
+}
+
+.hero p{
+ font-size:12px;color:#b8a99a;margin-top:12px;
+}
+
+.welcome{
+ background:linear-gradient(145deg,#29190d,#17110c);
+ border:1px solid #65401e;
+ border-radius:17px;padding:20px;
+ margin-bottom:20px;
+}
+
+.welcome h3{
+ font:23px 'Kaushan Script',cursive;
+ color:#ffad42;margin-bottom:9px;
+}
+
+.welcome p{
+ color:#d5c5b4;font-size:12px;line-height:1.8;
+}
+
+.features{
+ display:flex;gap:8px;flex-wrap:wrap;
+ justify-content:center;margin:20px 0;
+}
+
+.feature{
+ background:#21170f;border:1px solid #56371e;
+ border-radius:30px;padding:8px 12px;
+ font-size:11px;color:#ffb45b;
+}
+
+.chat-area{margin-top:20px}
+
+.message{
+ background:#211a13;border:1px solid #49301a;
+ border-radius:13px;padding:13px;
+ margin-bottom:12px;font-size:13px;line-height:1.8;
+ overflow-wrap:anywhere;
+ white-space:pre-wrap;
+}
+
+.user{background:#34200f;border-color:#70431c}
+
+.message small{
+ display:block;color:#ffab43;
+ font-weight:600;margin-bottom:6px;
+}
+
+.message img{
+ max-width:100%;max-height:220px;
+ object-fit:contain;border-radius:9px;margin-top:8px;
+}
+
+.composer{
+ position:fixed;bottom:0;left:0;width:100%;
+ background:#17110c;border-top:1px solid #49301a;
+ padding:12px 14px;z-index:5;
+}
+
+.composer-inner{max-width:850px;margin:auto}
+
+.preview{
+ display:none;margin-bottom:9px;
+ position:relative;width:max-content;
+}
+
+.preview img{
+ width:75px;height:75px;object-fit:cover;
+ border-radius:10px;border:1px solid #ff9d27;
+}
+
+.remove{
+ position:absolute;right:-8px;top:-8px;
+ background:#dc2626;color:white;border:0;
+ border-radius:50%;width:23px;height:23px;
+ cursor:pointer;
+}
+
+.input-row{
+ display:flex;align-items:center;gap:8px;
+ background:#261a10;border:1px solid #75451e;
+ border-radius:15px;padding:7px;
+}
+
+textarea{
+ flex:1;min-width:0;resize:none;height:45px;
+ background:transparent;border:0;outline:0;
+ color:white;padding:12px 7px;
+ font:12px Poppins,sans-serif;
+}
+
+textarea::placeholder{color:#a18d79}
+
+.send,.photo{
+ height:44px;width:44px;border:0;
+ border-radius:11px;cursor:pointer;
+ font-size:19px;
+}
+
+.send{background:#ff941f;color:#17110c}
+.photo{background:#392414;color:#ffad42}
+
+.footer{
+ text-align:center;color:#8f7c69;
+ font-size:10px;margin-top:9px;
+}
+
+.drawer{
+ position:fixed;inset:0;background:#0009;
+ z-index:10;display:none;
+}
+
+.drawer.active{display:block}
+
+.panel{
+ width:85%;max-width:330px;height:100%;
+ background:#17110c;border-right:1px solid #65401e;
+ padding:18px;overflow:auto;
+}
+
+.panel-head{
+ display:flex;justify-content:space-between;
+ align-items:center;margin-bottom:22px;
+}
+
+.panel h3{
+ font:23px 'Kaushan Script',cursive;color:#ffad42;
+}
+
+.history-item{
+ background:#281b10;border:1px solid #65401e;
+ border-radius:10px;padding:12px;margin-bottom:9px;
+ font-size:12px;cursor:pointer;
+}
+
+.history-item p{color:#c8b8a7;margin-top:5px}
+
+.history-actions{
+ display:flex;gap:7px;margin-top:10px;
+}
+
+.history-actions button{
+ background:#432916;color:#ffbb69;
+ border:0;padding:7px;border-radius:7px;
+ font-size:11px;cursor:pointer;
+}
+
+.policy{
+ display:none;position:fixed;inset:0;
+ background:#000c;z-index:20;
+ align-items:center;justify-content:center;
+ padding:15px;
+}
+
+.policy.active{display:flex}
+
+.policy-box{
+ background:#21170f;border:1px solid #805021;
+ border-radius:16px;padding:20px;
+ max-width:500px;width:100%;
+ max-height:85vh;overflow:auto;
+}
+
+.policy-box h2{
+ font:25px 'Kaushan Script',cursive;
+ color:#ffad42;margin-bottom:15px;
+}
+
+.policy-box h4{color:#ffad42;margin:14px 0 5px}
+
+.policy-box p{
+ color:#d4c3b1;font-size:12px;line-height:1.8;
+}
+
+.policy-box button{
+ background:#ff941f;color:#17110c;
+ border:0;padding:10px 18px;
+ border-radius:9px;margin-top:17px;cursor:pointer;
+}
+
+.link{
+ display:block;text-align:center;
+ color:#ffad42;text-decoration:none;
+ font-size:12px;margin-top:12px;
+}
+
+.empty{
+ color:#998776;font-size:12px;text-align:center;
+ padding:20px 0;
+}
+
+@media(max-width:400px){
+ .hero h1{font-size:31px}
+ .logo{font-size:20px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <button class="icon-btn" onclick="openHistory()">☰ History</button>
+ <div class="logo">Abhi <span>Doubt Solve</span></div>
+ <button class="icon-btn" onclick="openPolicy()">ⓘ</button>
+</header>
+
+<div class="layout">
+
+ <section class="hero">
+  <h1>Welcome Students</h1>
+  <h2>Let's Solve Your Doubts!</h2>
+  <p>Your Personal AI Study Partner<br>
+  JEE • NEET • Board Exams</p>
+ </section>
+
+ <section class="welcome">
+  <h3>Namaste Student!</h3>
+  <p>
+   Ask your questions related to Physics,
+   Chemistry, Mathematics and Biology.
+   Get easy explanations in Hindi and English.
+  </p>
+ </section>
+
+ <div class="features">
+  <div class="feature">✦ Physics</div>
+  <div class="feature">✦ Chemistry</div>
+  <div class="feature">✦ Mathematics</div>
+  <div class="feature">✦ Biology</div>
+  <div class="feature">✦ Hindi + English</div>
+ </div>
+
+ <div id="chatArea" class="chat-area"></div>
+
+</div>
+
+<!-- CHAT INPUT -->
+
+<div class="composer">
+ <div class="composer-inner">
+
+  <div class="preview" id="preview">
+   <img id="previewImage" alt="Question preview">
+   <button class="remove" onclick="removePhoto()">×</button>
+  </div>
+
+  <div class="input-row">
+
+   <label class="photo" for="photoInput"
+    style="display:grid;place-items:center">📷</label>
+
+   <input type="file" id="photoInput"
+    accept="image/*" capture="environment"
+    hidden onchange="selectPhoto(event)">
+
+   <textarea id="question"
+    placeholder="Ask your doubt here..."></textarea>
+
+   <button class="send" onclick="sendQuestion()">➤</button>
+
+  </div>
+
+  <div class="footer">
+   Abhi Doubt Solve • Your AI Study Partner
+  </div>
+
+ </div>
+</div>
+
+<!-- HISTORY PANEL -->
+
+<div class="drawer" id="drawer" onclick="closeHistory(event)">
+ <div class="panel" onclick="event.stopPropagation()">
+
+  <div class="panel-head">
+   <h3>Chat History</h3>
+   <button class="icon-btn" onclick="closeHistory()">✕</button>
+  </div>
+
+  <div id="historyList"></div>
+
+  <button class="icon-btn" onclick="clearHistory()">
+   Delete All History
+  </button>
+
+  <a href="#" class="link" onclick="openPolicy();return false">
+   Privacy Policy
+  </a>
+
+ </div>
+</div>
+
+<!-- PRIVACY POLICY -->
+
+<div class="policy" id="policy">
+ <div class="policy-box">
+
+  <h2>Privacy Policy</h2>
+
+  <p><b>Abhi Doubt Solve</b> respects the privacy of its users.</p>
+
+  <h4>1. Information</h4>
+  <p>This website stores chat history locally in your browser.
+  No account or personal details are currently required.</p>
+
+  <h4>2. Chat History</h4>
+  <p>Chat history is saved in this browser on your device.
+  Clearing browser site data may delete it.</p>
+
+  <h4>3. Photos</h4>
+  <p>Selected photos are sent to the AI service to answer your question.</p>
+
+  <h4>4. Data Security</h4>
+  <p>Do not enter passwords, financial details or other sensitive
+  personal information in your questions.</p>
+
+  <h4>5. AI Services</h4>
+  <p>Questions and attached photos are sent to the configured AI service
+  for generating answers.</p>
+
+  <h4>6. Contact</h4>
+  <p>Website: Abhi Doubt Solve</p>
+
+  <button onclick="closePolicy()">Close</button>
+
+ </div>
+</div>
+
+<script>
+"use strict";
+
+const API_ENDPOINT = "/.netlify/functions/ask-gemini";
+const CHAT_STORAGE_KEY = "abhiChats";
+
+let currentPhoto = null;
+let isSending = false;
+let chats = loadSavedChats();
+let activeChat = null;
+
+function loadSavedChats() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CHAT_STORAGE_KEY) || "[]");
+    return Array.isArray(saved) ? saved : [];
+  } catch (error) {
+    console.warn("Saved chat history could not be read:", error);
+    return [];
+  }
+}
+
+function saveChats() {
+  try {
+    localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(chats));
+  } catch (error) {
+    console.warn("Chat history could not be saved:", error);
+  }
+}
+
+function newChat() {
+  activeChat = { id: Date.now(), messages: [] };
+  chats.unshift(activeChat);
+  saveChats();
+  document.getElementById("chatArea").innerHTML = "";
+  return activeChat;
+}
+
+function addMessage(type, text, photoUrl) {
+  const chat = document.getElementById("chatArea");
+  const box = document.createElement("div");
+
+  box.className = "message" + (type === "You" ? " user" : "");
+
+  const label = document.createElement("small");
+  label.textContent = type;
+
+  const content = document.createElement("div");
+  content.textContent = text || "";
+
+  box.append(label, content);
+
+  if (photoUrl) {
+    const img = document.createElement("img");
+    img.src = photoUrl;
+    img.alt = "Attached question";
+    box.appendChild(img);
+  }
+
+  chat.appendChild(box);
+  box.scrollIntoView({ behavior: "smooth", block: "end" });
+
+  return box;
+}
+
+function addStoredMessage(message) {
+  const role = message.role || "user";
+  const type = role === "assistant" ? "Gemini AI" : "You";
+
+  addMessage(
+    type,
+    message.text || (message.photoName ? "Question photo attached" : ""),
+    message.photoDataUrl || null
+  );
+}
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const result = String(reader.result || "");
+      const comma = result.indexOf(",");
+
+      if (comma < 0) {
+        return reject(new Error("Could not read the selected image."));
+      }
+
+      resolve(result.slice(comma + 1));
+    };
+
+    reader.onerror = () => {
+      reject(new Error("Could not read the selected image."));
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+async function sendQuestion() {
+  if (isSending) return;
+
+  const input = document.getElementById("question");
+  const sendButton = document.querySelector(".send");
+
+  const question = input.value.trim();
+  const photo = currentPhoto;
+
+  if (!question && !photo) {
+    alert("Enter a question or select a photo.");
+    input.focus();
+    return;
+  }
+
+  if (!activeChat) newChat();
+
+  isSending = true;
+  sendButton.disabled = true;
+  sendButton.textContent = "…";
+  sendButton.style.opacity = "0.65";
+
+  const photoUrl = photo ? URL.createObjectURL(photo) : null;
+  const userText = question || "Please solve the question in this photo.";
+
+  addMessage("You", userText, photoUrl);
+
+  activeChat.messages.push({
+    role: "user",
+    text: userText,
+    photoName: photo ? photo.name : "",
+    time: new Date().toISOString()
+  });
+
+  saveChats();
+  input.value = "";
+  removePhoto();
+
+  const waitingMessage = addMessage("Gemini AI", "Thinking… please wait.");
+
+  try {
+    let imageBase64 = null;
+    let imageMimeType = null;
+
+    if (photo) {
+      imageBase64 = await fileToBase64(photo);
+      imageMimeType = photo.type || "image/jpeg";
+    }
+
+    const response = await fetch(API_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        question,
+        imageBase64,
+        imageMimeType
+      })
+    });
+
+    let data;
+
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      throw new Error(
+        "Server returned an invalid response. Check that the Netlify Function is deployed."
+      );
+    }
+
+    if (!response.ok) {
+      throw new Error(
+        data.error || data.message ||
+        ("Request failed (HTTP " + response.status + ")")
+      );
+    }
+
+    const answer =
+      data.answer || data.reply || data.text || data.response;
+
+    if (!answer || typeof answer !== "string") {
+      throw new Error(
+        "Gemini response was empty. Check the Netlify Function response format."
+      );
+    }
+
+    waitingMessage.remove();
+
+    addMessage("Gemini AI", answer);
+
+    activeChat.messages.push({
+      role: "assistant",
+      text: answer,
+      time: new Date().toISOString()
+    });
+
+    saveChats();
+
+  } catch (error) {
+    console.error("Gemini request failed:", error);
+
+    waitingMessage.remove();
+
+    const errorMessage =
+      "Could not get an AI answer: " +
+      (error.message || "Unknown error") +
+      "\n\nCheck Netlify Functions deployment and the GEMINI_API_KEY environment variable.";
+
+    addMessage("Connection Error", errorMessage);
+
+    activeChat.messages.push({
+      role: "assistant",
+      text: errorMessage,
+      time: new Date().toISOString()
+    });
+
+    saveChats();
+
+  } finally {
+    if (photoUrl) URL.revokeObjectURL(photoUrl);
+
+    isSending = false;
+    sendButton.disabled = false;
+    sendButton.textContent = "➤";
+    sendButton.style.opacity = "1";
+
+    input.focus();
+  }
+}
+
+function openHistory() {
+  renderHistory();
+  document.getElementById("drawer").classList.add("active");
+}
+
+function closeHistory(event) {
+  if (event && event.target && event.target.id !== "drawer") return;
+
+  document.getElementById("drawer").classList.remove("active");
+}
+
+function renderHistory() {
+  const list = document.getElementById("historyList");
+  list.innerHTML = "";
+
+  if (!chats.length) {
+    list.innerHTML =
+      '<div class="empty">No chat history yet.</div>';
+    return;
+  }
+
+  chats.forEach(chat => {
+    const item = document.createElement("div");
+    item.className = "history-item";
+
+    const firstUserMessage =
+      (chat.messages || []).find(
+        message => !message.role || message.role === "user"
+      );
+
+    const title = document.createElement("b");
+    title.textContent =
+      (firstUserMessage && firstUserMessage.text) || "Photo question";
+
+    const info = document.createElement("p");
+    info.textContent = (chat.messages || []).length + " messages";
+
+    const actions = document.createElement("div");
+    actions.className = "history-actions";
+
+    const open = document.createElement("button");
+    open.type = "button";
+    open.textContent = "Open";
+    open.onclick = () => loadChat(chat.id);
+
+    const del = document.createElement("button");
+    del.type = "button";
+    del.textContent = "Delete";
+    del.onclick = () => deleteChat(chat.id);
+
+    actions.append(open, del);
+    item.append(title, info, actions);
+    list.appendChild(item);
+  });
+}
+
+function loadChat(id) {
+  activeChat =
+    chats.find(chat => String(chat.id) === String(id)) || null;
+
+  const area = document.getElementById("chatArea");
+  area.innerHTML = "";
+
+  if (activeChat) {
+    (activeChat.messages || []).forEach(addStoredMessage);
+  }
+
+  document.getElementById("drawer").classList.remove("active");
+}
+
+function deleteChat(id) {
+  if (!confirm("Delete this chat?")) return;
+
+  chats = chats.filter(
+    chat => String(chat.id) !== String(id)
+  );
+
+  if (activeChat && String(activeChat.id) === String(id)) {
+    activeChat = null;
+    document.getElementById("chatArea").innerHTML = "";
+  }
+
+  saveChats();
+  renderHistory();
+}
+
+function clearHistory() {
+  if (!confirm("Delete all chat history?")) return;
+
+  chats = [];
+  activeChat = null;
+
+  saveChats();
+
+  document.getElementById("chatArea").innerHTML = "";
+  renderHistory();
+}
+
+function selectPhoto(event) {
+  const file = event.target.files && event.target.files[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    alert("Please select an image.");
+    event.target.value = "";
+    return;
+  }
+
+  if (file.size > 3 * 1024 * 1024) {
+    alert("Please select an image under 3 MB.");
+    event.target.value = "";
+    return;
+  }
+
+  currentPhoto = file;
+
+  const oldUrl =
+    document.getElementById("previewImage").dataset.objectUrl;
+
+  if (oldUrl) URL.revokeObjectURL(oldUrl);
+
+  const url = URL.createObjectURL(file);
+
+  document.getElementById("previewImage").src = url;
+  document.getElementById("previewImage").dataset.objectUrl = url;
+
+  document.getElementById("preview").style.display = "block";
+}
+
+function removePhoto() {
+  currentPhoto = null;
+
+  const input = document.getElementById("photoInput");
+  if (input) input.value = "";
+
+  const image = document.getElementById("previewImage");
+
+  if (image.dataset.objectUrl) {
+    URL.revokeObjectURL(image.dataset.objectUrl);
+  }
+
+  image.dataset.objectUrl = "";
+  image.src = "";
+
+  document.getElementById("preview").style.display = "none";
+}
+
+function openPolicy() {
+  document.getElementById("policy").classList.add("active");
+}
+
+function closePolicy() {
+  document.getElementById("policy").classList.remove("active");
+}
+
+document.getElementById("question").addEventListener("keydown", event => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    sendQuestion();
+  }
+});
+
+document.getElementById("policy").addEventListener("click", event => {
+  if (event.target.id === "policy") {
+    closePolicy();
+  }
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closePolicy();
+    document.getElementById("drawer").classList.remove("active");
+  }
+});
+</script>
+
+</body>
+  </html>
+  
