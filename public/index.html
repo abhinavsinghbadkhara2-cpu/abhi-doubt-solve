@@ -425,7 +425,73 @@ function addMessage(type,text,photo){
  chat.appendChild(box);
 }
 
-function sendQuestion(){
+async function sendQuestion() {
+  const input = document.getElementById("question");
+  const question = input.value.trim();
+
+  if (!question) {
+    alert("Please enter your question.");
+    return;
+  }
+
+  if (currentPhoto) {
+    alert("Photo solving is not connected yet. Please send a text question.");
+    return;
+  }
+
+  if (!activeChat) newChat();
+
+  activeChat.messages.push({
+    role: "user",
+    text: question,
+    time: new Date().toLocaleString()
+  });
+
+  addMessage("You", question, null);
+  input.value = "";
+
+  const chatArea = document.getElementById("chatArea");
+  const loading = document.createElement("div");
+  loading.className = "message bot";
+  loading.textContent = "Abhi Doubt Solve is thinking...";
+  chatArea.appendChild(loading);
+
+  const sendButton = document.querySelector(".send");
+  if (sendButton) sendButton.disabled = true;
+
+  try {
+    const response = await fetch("/.netlify/functions/ask", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ question })
+    });
+
+    const data = await response.json();
+    loading.remove();
+
+    if (!response.ok) {
+      throw new Error(data.error || "AI request failed");
+    }
+
+    addMessage("Abhi Doubt Solve", data.answer, null);
+
+    activeChat.messages.push({
+      role: "assistant",
+      text: data.answer,
+      time: new Date().toLocaleString()
+    });
+
+    saveChats();
+
+  } catch (error) {
+    loading.remove();
+    addMessage("Abhi Doubt Solve", "Error: " + error.message, null);
+  } finally {
+    if (sendButton) sendButton.disabled = false;
+  }
+}
  const input=document.getElementById("question");
  const question=input.value.trim();
 
